@@ -6,12 +6,21 @@ const userSchema = new mongoose.Schema({
     passwordHash: { type: String, required: true },
     role: {
         type: String,
-        enum: ['student', 'faculty', 'admin', 'hod'],
+        enum: ['student', 'faculty', 'admin', 'hod', 'committee_member'],
         default: 'student'
     },
     departmentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Department'
+    },
+    bio: { type: String, default: '' },
+    profilePicture: { type: String, default: '' },
+    researchInterests: [{ type: String }],
+    socialLinks: {
+        linkedin: { type: String, default: '' },
+        scholar: { type: String, default: '' },
+        twitter: { type: String, default: '' },
+        website: { type: String, default: '' }
     }
 }, { timestamps: true });
 

@@ -77,4 +77,19 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// GET /user/:id - Get public profile
+router.get('/user/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+            .select('fullName email role departmentId')
+            .populate('departmentId', 'name code');
+
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 module.exports = router;
+

@@ -1,0 +1,22 @@
+# Environment and secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies
+**/node_modules/
+
+# Generated uploads and debug output
+**/uploads/
+**/debug_*.js
+**/debug_*.json
+**/mock_*.json
+**/verify_*.js
+
+# Build output
+**/.next/
+**/dist/
+**/build/
+
+# Local logs
+*.log

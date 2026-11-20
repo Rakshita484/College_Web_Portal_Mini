@@ -13,22 +13,45 @@ const paperSchema = new mongoose.Schema({
     year: { type: Number },
     type: {
         type: String,
-        enum: ['journal', 'conference', 'research_paper'],
-        default: 'research_paper'
+        enum: ['Journal', 'Conference', 'Research Paper', 'Thesis', 'Patent'],
+        default: 'Research Paper'
     },
     venue: { type: String },
     pdfUrl: { type: String },
     certificateUrl: { type: String },
     status: {
         type: String,
-        enum: ['pending', 'approved', 'rejected'],
-        default: 'pending'
+        enum: ['pending_faculty', 'pending_admin', 'approved', 'rejected', 'revision_requested', 'published'],
+        default: 'pending_faculty'
     },
+    citationsCount: { type: Number, default: 0 },
+    readsCount: { type: Number, default: 0 },
+    // Version Control
+    currentVersion: { type: Number, default: 1 },
+    versions: [{
+        versionNumber: { type: Number },
+        pdfUrl: { type: String },
+        changesDescription: { type: String },
+        submittedAt: { type: Date, default: Date.now }
+    }],
+    // Approval Workflow Logs
+    workflowLogs: [{
+        stage: { type: String, enum: ['student', 'faculty', 'hod', 'committee', 'admin'] },
+        approverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        action: { type: String, enum: ['approve', 'reject', 'request_revision'] },
+        comments: { type: String },
+        timestamp: { type: Date, default: Date.now }
+    }],
+
     submittedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    plagiarismScore: { type: Number, default: 0 },
+    plagiarismReport: { type: String },
+    citationsCount: { type: Number, default: 0 },
+    readsCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Paper', paperSchema);

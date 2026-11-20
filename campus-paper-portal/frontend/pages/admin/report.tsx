@@ -13,7 +13,7 @@ export default function AnnualReport() {
         try {
             const res = await api.get(`/report/annual?year=${year}`);
             setData(res.data);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to fetch report', err);
             alert('Failed to fetch report');
         } finally {

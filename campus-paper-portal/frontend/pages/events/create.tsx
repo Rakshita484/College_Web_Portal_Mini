@@ -22,17 +22,21 @@ export default function CreateEventPage() {
         }
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
         try {
+            // Send formData with venue field - backend will map it to location
             await api.post('/events', formData);
             alert('Event created successfully!');
             router.push('/events');
-        } catch (err) {
-            setError(err.response?.data?.message || 'Failed to create event');
+        } catch (err: any) {
+            console.error('Event creation error:', err);
+            const errorMessage = err.response?.data?.message || 'Failed to create event';
+            const errorDetails = err.response?.data?.error;
+            setError(errorDetails ? `${errorMessage}: ${errorDetails}` : errorMessage);
         } finally {
             setLoading(false);
         }

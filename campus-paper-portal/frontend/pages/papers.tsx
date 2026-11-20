@@ -38,7 +38,7 @@ export default function PapersSearch() {
         try {
             const res = await api.get('/departments'); // Assuming this exists, if not we might need to create it or mock
             setDepartments(res.data);
-        } catch (err) {
+        } catch (err: any) {
             // If /departments doesn't exist, we just won't show options
         }
     };
@@ -55,7 +55,7 @@ export default function PapersSearch() {
 
             const res = await api.get(`/search/papers?${params.toString()}`);
             setPapers(res.data);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Search failed', err);
         } finally {
             setLoading(false);

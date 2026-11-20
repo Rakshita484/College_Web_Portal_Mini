@@ -1,12 +1,16 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import AIChatWidget from "../components/AIChatWidget";
+import { ThemeProvider } from '../contexts/ThemeContext';
+import { LanguageProvider } from '../contexts/LanguageContext';
+import Chatbot from '../components/Chatbot';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <Component {...pageProps} />
-      <AIChatWidget />
-    </>
+    <ThemeProvider>
+      <LanguageProvider>
+        <Component {...pageProps} />
+        <Chatbot />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
